@@ -1,11 +1,10 @@
-version: '3'
+version: "3"
 services:
   linkchecker:
-    build:
-      context: ./docker
-    container_name: ${COMPOSE_PROJECT_NAME}_linkchecker
+    image: ghcr.io/webdimension/linkchecker:latest
+    container_name: ${PROJECT_NAME}_linkchecker
     volumes:
-      - ${DIR_PATH}/docker/output:/workspace/output
-      - ${DIR_PATH}/docker/src:/workspace/src
+      - ${DIR_PATH}/output:/workspace/output
+      - ${DIR_PATH}/src:/workspace/src
     working_dir: /workspace/src
     entrypoint: "/bin/sh -c './linkchecker.sh'"
