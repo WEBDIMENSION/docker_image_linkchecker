@@ -6,5 +6,7 @@ services:
     volumes:
       - ${DIR_PATH}/output:/workspace/output
       - ${DIR_PATH}/src:/workspace/src
+    environment:
+      - TARGET_URL=${TARGET_URL}
     working_dir: /workspace/src
     entrypoint: "/bin/sh -c './linkchecker.sh'"

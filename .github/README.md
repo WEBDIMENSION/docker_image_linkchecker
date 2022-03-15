@@ -2,9 +2,9 @@
 
 ## Usage
 
-### Example Docker-comopose
+### Example Docker-compose
 
-#### Structure
+#### Docker-compose Structure
 
 ```bash
 ├── docker-compose.yml
@@ -19,9 +19,10 @@
 ```env
 DIR_PATH=.
 PROJECT_NAME=linkchecker # As you like
+TARGET_URL=<<TARGET_URL>>
 ```
 
-#### docker-comose.yml
+#### docker-compose.yml
 
 ```yml
 version: "3"
@@ -32,19 +33,19 @@ services:
     volumes:
       - ${DIR_PATH}/docker/output:/workspace/output
       - ${DIR_PATH}/docker/src:/workspace/src
+    environment:
+      - TARGET_URL=${TARGET_URL}
     working_dir: /workspace/src
     entrypoint: "/bin/sh -c './linkchecker.sh'"
 ```
 
-#### src/linkchcker.sh
+#### src/linkchecker.sh
 
 ```sh
-linkchecker -o text -Fhtml//workspace/output/report/linkchecker.report.html <<TargenURL>>
-# exaple
-# linkchecker -o text -Fhtml//workspace/output/report/linkchecker.report.html http://localhost:9000
+linkchecker -o text -Fhtml//workspace/output/report/linkchecker.report.html "$TARGET_URL"
 ```
 
-#### docker-copose 実行
+#### docker-compose 実行
 
 ```bash
 docker-compose run --rm linkchecker
@@ -52,7 +53,7 @@ docker-compose run --rm linkchecker
 
 ### Example Docker
 
-### Structure
+### Docker Structure
 
 ```bash
 ├── output
@@ -61,19 +62,11 @@ docker-compose run --rm linkchecker
     └── linkchecker.sh
 ```
 
-### .env
-
-```env
-DIR_PATH=.
-PROJECT_NAME=linkchecker # As you like
-```
-
-
-### src/linkchcker.sh
+### Docker-compose `src/linkchecker.sh`
 
 ```sh
 linkchecker -o text -Fhtml//workspace/output/report/linkchecker.report.html <<TargenURL>>
-# exaple
+# Example
 # linkchecker -o text -Fhtml//workspace/output/report/linkchecker.report.html http://localhost:9000
 ```
 
@@ -89,9 +82,8 @@ docker run --rm \
 -v /Users/garaccii/CloudStation/workspace/projects/GitHub/linkchecker/output:/workspace/output \
 --workdir="/workspace/src" \
 --entrypoint "./linkchecker.sh" \
---name linkchecker ghcr.io/webdimension/linkchecker:latest 
+--name linkchecker ghcr.io/webdimension/linkchecker:latest
 ```
-
 
 ## 解析ファイル
 
@@ -102,7 +94,7 @@ docker run --rm \
 `Over Write src/linkchecker`
 
 ```bash
-# Format htmnl
+# Format html
 linkchecker -o text -Fhtml/report/linkchecker.report.html http://localhost
 ```
 
@@ -127,6 +119,6 @@ linkchecker -o text -Fdot/report/linkchecker.report.dot http://loalhost
 ```
 
 ```bash
-# Format Failuer
+# Format failures
 linkchecker -o text -Ffailures/report/linkchecker.report.failures http://loalhost
 ```
